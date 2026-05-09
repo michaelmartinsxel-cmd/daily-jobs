@@ -1,0 +1,61 @@
+# ============================================================
+# CONFIGURAÇÃO DO SEU PERFIL — edite este arquivo para
+# customizar a busca de vagas para o seu perfil
+# ============================================================
+
+profile:
+  name: "Seu Nome"
+
+  # Suas stacks (usadas para calcular o % de match com cada vaga)
+  stack:
+    - javascript
+    - typescript
+    - react
+    - nodejs
+    - "next.js"
+    - frontend
+    - fullstack
+
+search:
+  # Termos de busca enviados para as APIs
+  keywords:
+    - "javascript developer"
+    - "typescript developer"
+    - "react developer"
+    - "frontend developer"
+    - "fullstack developer"
+    - "node developer"
+
+  # Modalidades aceitas
+  modalities:
+    - remote
+    - remoto
+    - hybrid
+    - híbrido
+    - international
+
+experience:
+  # Máximo de anos de experiência exigidos (vagas com mais são descartadas)
+  max_years: 4
+
+  # Palavras que indicam nível acima do aceitável (vaga será descartada)
+  exclude_levels:
+    - senior
+    - sênior
+    - "sr."
+    - "5+ years"
+    - "6+ years"
+    - "7+ years"
+    - "8+ years"
+    - "10+ years"
+
+  # Palavras que indicam nível dentro do aceitável (vaga será mantida)
+  include_levels:
+    - junior
+    - júnior
+    - mid
+    - pleno
+    - "1-2 years"
+    - "1-3 years"
+    - "2-4 years"
+    - "up to 4 years"
