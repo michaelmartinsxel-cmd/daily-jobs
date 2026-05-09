@@ -92,7 +92,7 @@ def fetch_jsearch(keywords: list[str]) -> list[dict]:
         "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
     }
 
-    for kw in keywords[:3]:  # limit to avoid rate cap
+    for kw in keywords[:3]:
         try:
             resp = requests.get(
                 JSEARCH_URL,
@@ -188,7 +188,6 @@ def dedup(jobs: list[dict]) -> list[dict]:
 # ── Experience filter ────────────────────────────────────────────────────────
 
 def _years_from_text(text: str) -> int | None:
-    """Extract the largest explicit year requirement mentioned in text."""
     matches = re.findall(r"(\d+)\+?\s*(?:years?|anos?)", text, re.IGNORECASE)
     if matches:
         return max(int(m) for m in matches)
@@ -199,17 +198,14 @@ def filter_by_experience(jobs: list[dict], config: dict) -> list[dict]:
     exp = config.get("experience", {})
     max_years: int = exp.get("max_years", 99)
     exclude: list[str] = [e.lower() for e in exp.get("exclude_levels", [])]
-    include: list[str] = [i.lower() for i in exp.get("include_levels", [])]
 
     filtered = []
     for job in jobs:
         text = f"{job['title']} {job['description']}".lower()
 
-        # hard exclude if a senior-level keyword is found
         if any(ex in text for ex in exclude):
             continue
 
-        # check explicit year requirement
         required_years = _years_from_text(text)
         if required_years is not None and required_years > max_years:
             continue
@@ -243,8 +239,7 @@ def calculate_match(job: dict, user_stack: list[str]) -> dict:
 
 def detect_modality(job: dict, accepted: list[str]) -> str:
     text = f"{job['title']} {job['location']} {job['description']}".lower()
-    accepted_lower = [m.lower() for m in accepted]
-    for mod in accepted_lower:
+    for mod in [m.lower() for m in accepted]:
         if mod in text:
             return mod.capitalize()
     return "Unknown"

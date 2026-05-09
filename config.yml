@@ -25,6 +25,10 @@ search:
     - "frontend developer"
     - "fullstack developer"
     - "node developer"
+    - "javascript"
+    - "nodejs"
+    - "next.js"
+    - "fullstack"
 
   # Modalidades aceitas
   modalities:

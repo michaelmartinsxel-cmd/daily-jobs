@@ -4,13 +4,19 @@ on:
   schedule:
     # 12:00 UTC = 09:00 BRT
     - cron: "0 12 * * *"
-  workflow_dispatch: # permite rodar manualmente
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   search-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -33,14 +39,11 @@ jobs:
           ADZUNA_APP_KEY:  ${{ secrets.ADZUNA_APP_KEY }}
         run: python scripts/job-search/search.py
 
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN:   ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID:  ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          npm install -g vercel@latest
-          vercel deploy --prod --yes \
-            --token "$VERCEL_TOKEN" \
-            --build-env VERCEL_ORG_ID="$VERCEL_ORG_ID" \
-            --build-env VERCEL_PROJECT_ID="$VERCEL_PROJECT_ID"
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
