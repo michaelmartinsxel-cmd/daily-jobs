@@ -2,64 +2,95 @@
 # CONFIGURAÇÃO DO SEU PERFIL — edite este arquivo para
 # customizar a busca de vagas para o seu perfil
 # ============================================================
-
 profile:
-  name: "Eduardo"
-
+  name: "Michael Martins"
   # Suas stacks (usadas para calcular o % de match com cada vaga)
   stack:
-    - javascript
-    - typescript
-    - react
-    - nodejs
-    - "next.js"
-    - frontend
-    - fullstack
+    - treasury
+    - "análise de crédito"
+    - "credit analysis"
+    - "conciliação bancária"
+    - "bank reconciliation"
+    - aging
+    - câmbio
+    - "foreign exchange"
+    - "fluxo de caixa"
+    - "cash flow"
+    - "contas a pagar"
+    - "contas a receber"
+    - "accounts payable"
+    - "accounts receivable"
+    - controladoria
+    - compliance
+    - auditoria
+    - excel
+    - "excel avançado"
+    - totvs
+    - protheus
+    - ax
+    - cargowise
+    - "freight forwarding"
+    - logística
+    - "risco de crédito"
+    - cobrança
+    - faturamento
+    - "notas fiscais"
 
 search:
   # Termos de busca enviados para as APIs
   keywords:
-    - "javascript developer"
-    - "typescript developer"
-    - "react developer"
-    - "frontend developer"
-    - "fullstack developer"
-    - "node developer"
-    - "javascript"
-    - "nodejs"
-    - "next.js"
-    - "fullstack"
-
+    - "analista financeiro senior"
+    - "analista financeiro sênior"
+    - "senior financial analyst"
+    - "treasury analyst"
+    - "analista de treasury"
+    - "credit analyst"
+    - "analista de crédito"
+    - "fp&a analyst"
+    - "financial analyst"
+    - "analista financeiro pleno"
+    - "contas a pagar"
+    - "contas a receber"
+    - "accounts payable analyst"
+    - "accounts receivable analyst"
+    - "cash flow analyst"
+    - "controladoria"
+    - "controllership analyst"
+    - "compliance analyst"
+    - "conciliação bancária"
+    - "bank reconciliation"
   # Modalidades aceitas
   modalities:
     - remote
     - remoto
     - hybrid
     - híbrido
-    - international
 
 experience:
   # Máximo de anos de experiência exigidos (vagas com mais são descartadas)
-  max_years: 4
-
+  max_years: 10
   # Palavras que indicam nível acima do aceitável (vaga será descartada)
   exclude_levels:
+    - "coordenador financeiro"
+    - "gerente financeiro"
+    - "finance manager"
+    - "diretor financeiro"
+    - "cfo"
+    - "head of finance"
+    - "finance director"
+    - "12+ years"
+    - "15+ years"
+  # Palavras que indicam nível dentro do aceitável (vaga será mantida)
+  include_levels:
+    - pleno
     - senior
     - sênior
     - "sr."
-    - "5+ years"
-    - "6+ years"
-    - "7+ years"
-    - "8+ years"
-    - "10+ years"
-
-  # Palavras que indicam nível dentro do aceitável (vaga será mantida)
-  include_levels:
-    - junior
-    - júnior
-    - mid
-    - pleno
-    - "1-2 years"
-    - "1-3 years"
-    - "2-4 years"
-    - "up to 4 years"
+    - "sr"
+    - "pl."
+    - "3-5 years"
+    - "4-6 years"
+    - "5-8 years"
+    - "6-10 years"
+    - "up to 10 years"
+    - "acima de 5 anos"
