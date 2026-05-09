@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ profile_name }} — Vagas do Dia</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid #334155;
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 0.4rem;
+    }
+    header p.subtitle {
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    .stats {
+      display: inline-flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 0.75rem;
+      padding: 0.6rem 1.25rem;
+    }
+    .stats span { font-size: 0.85rem; color: #94a3b8; }
+    .stats strong { color: #e2e8f0; }
+
+    /* ── Filters ── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      padding: 1.25rem 1.5rem;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+    }
+    .filter-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      border-radius: 2rem;
+      padding: 0.35rem 1rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #334155;
+      color: #f1f5f9;
+      border-color: #475569;
+    }
+    .filter-btn.active { font-weight: 600; }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+      padding: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 1rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.4);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.35;
+    }
+    .match-badge {
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2rem;
+    }
+    .match-green  { background: #14532d; color: #4ade80; }
+    .match-yellow { background: #713f12; color: #facc15; }
+    .match-red    { background: #450a0a; color: #f87171; }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: #94a3b8;
+    }
+    .meta-item::after { content: "·"; margin-left: 0.4rem; }
+    .meta-item:last-child::after { content: ""; }
+
+    .modality-tag {
+      display: inline-block;
+      background: #1d4ed8;
+      color: #bfdbfe;
+      border-radius: 0.3rem;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+    .skill {
+      font-size: 0.73rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 0.3rem;
+      font-weight: 500;
+    }
+    .skill-found   { background: #14532d; color: #86efac; }
+    .skill-missing { background: #1e293b; color: #64748b; border: 1px solid #334155; }
+
+    .source-tag {
+      font-size: 0.72rem;
+      color: #475569;
+      align-self: flex-end;
+      margin-top: auto;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.25rem;
+    }
+    .btn-apply {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.45rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .btn-apply:hover { background: #1d4ed8; }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #475569;
+    }
+    .empty h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: #334155;
+      border-top: 1px solid #1e293b;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>{{ profile_name }} — Vagas do Dia</h1>
+  <p class="subtitle">Atualizado em {{ updated_at }}</p>
+  <div class="stats">
+    <span><strong>{{ total }}</strong> vagas encontradas</span>
+  </div>
+</header>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all" onclick="filterCards(this, 'all')">Todas</button>
+  <button class="filter-btn" data-filter="remote"    onclick="filterCards(this, 'remote')">Remote</button>
+  <button class="filter-btn" data-filter="hybrid"    onclick="filterCards(this, 'hybrid')">Hybrid</button>
+  <button class="filter-btn" data-filter="green"     onclick="filterCards(this, 'green')">≥70% match</button>
+  <button class="filter-btn" data-filter="yellow"    onclick="filterCards(this, 'yellow')">40-69% match</button>
+</div>
+
+<div class="grid" id="grid">
+  {% if jobs %}
+    {% for job in jobs %}
+    {% set pct = job.match_pct %}
+    {% if pct >= 70 %}
+      {% set badge_class = "match-green" %}
+    {% elif pct >= 40 %}
+      {% set badge_class = "match-yellow" %}
+    {% else %}
+      {% set badge_class = "match-red" %}
+    {% endif %}
+    {% set mod_lower = job.modality | lower %}
+
+    <div class="card"
+         data-modality="{{ mod_lower }}"
+         data-match="{{ 'green' if pct >= 70 else ('yellow' if pct >= 40 else 'red') }}">
+
+      <div class="card-header">
+        <div class="card-title">{{ job.title }}</div>
+        <span class="match-badge {{ badge_class }}">{{ pct }}%</span>
+      </div>
+
+      <div class="card-meta">
+        <span class="meta-item">{{ job.company }}</span>
+        <span class="meta-item">{{ job.location }}</span>
+        <span class="modality-tag">{{ job.modality }}</span>
+      </div>
+
+      <div class="skills">
+        {% for s in job.skills_found %}
+          <span class="skill skill-found">{{ s }}</span>
+        {% endfor %}
+        {% for s in job.skills_missing %}
+          <span class="skill skill-missing">{{ s }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="card-footer">
+        <span class="source-tag">{{ job.source }}</span>
+        <a class="btn-apply" href="{{ job.url }}" target="_blank" rel="noopener">Ver Vaga</a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty" style="grid-column: 1/-1">
+      <h2>Nenhuma vaga encontrada hoje.</h2>
+      <p>Tente ajustar as keywords no <code>config.yml</code>.</p>
+    </div>
+  {% endif %}
+</div>
+
+<footer>Gerado automaticamente por GitHub Actions · daily-jobs</footer>
+
+<script>
+  function filterCards(btn, filter) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    document.querySelectorAll('.card').forEach(card => {
+      if (filter === 'all') {
+        card.style.display = '';
+        return;
+      }
+      if (filter === 'remote' || filter === 'hybrid') {
+        card.style.display = card.dataset.modality.includes(filter) ? '' : 'none';
+        return;
+      }
+      // green / yellow
+      card.style.display = card.dataset.match === filter ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>
