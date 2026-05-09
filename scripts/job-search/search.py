@@ -106,14 +106,30 @@ def fetch_jsearch(keywords: list[str]) -> list[dict]:
             log.warning("JSearch error for '%s': %s", kw, exc)
             continue
 
+        now_utc = datetime.now(timezone.utc)
+
         for item in data:
+            apply_link = item.get("job_apply_link", "")
+            if not apply_link:
+                continue
+
+            expiration_raw = item.get("job_offer_expiration_datetime_utc", "")
+            if expiration_raw:
+                try:
+                    exp_dt = datetime.fromisoformat(expiration_raw.replace("Z", "+00:00"))
+                    if exp_dt < now_utc:
+                        log.debug("Skipping expired job: %s", item.get("job_title", ""))
+                        continue
+                except ValueError:
+                    pass
+
             jobs.append({
                 "id": item.get("job_id", ""),
                 "title": item.get("job_title", ""),
                 "company": item.get("employer_name", ""),
                 "location": item.get("job_city") or item.get("job_country") or "Remote",
                 "description": item.get("job_description", ""),
-                "url": item.get("job_apply_link", ""),
+                "url": apply_link,
                 "source": "JSearch",
                 "posted_at": item.get("job_posted_at_datetime_utc", ""),
             })
