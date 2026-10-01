@@ -23,8 +23,12 @@ profile:
 search:
   country: "br"            # Brasil
   location: "São Paulo"    # cidade usada nas buscas (deixe "" para o Brasil inteiro)
+  max_days: 7              # só vagas publicadas nos últimos 7 dias
   jsearch_max_keywords: 3  # JSearch gratuito tem ~200 buscas/mês: 3 por dia cabe no limite
+                           # (o JSearch agrega LinkedIn, Indeed, Catho, InfoJobs, Glassdoor etc. via Google Vagas)
   adzuna_max_keywords: 8   # Adzuna gratuito permite bem mais
+  gupy_enabled: true       # Gupy: API pública, não precisa de chave
+  gupy_max_keywords: 10
 
   # Termos de busca, em ordem de prioridade (os primeiros são usados em todas as fontes)
   keywords:
