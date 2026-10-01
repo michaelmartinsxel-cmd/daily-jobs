@@ -1,0 +1,81 @@
+# ============================================================
+# CONFIGURAÇÃO DO PERFIL — único arquivo que precisa ser editado
+# ============================================================
+profile:
+  name: "Michael Martins"
+
+  # Competências usadas para calcular o % de match de cada vaga
+  # (match = competências encontradas na vaga / total desta lista)
+  stack:
+    - "contas a pagar"
+    - "accounts payable"
+    - tesouraria
+    - treasury
+    - "fluxo de caixa"
+    - "conciliação bancária"
+    - câmbio
+    - sap
+    - "excel"
+    - "contas a receber"
+    - controladoria
+    - "inglês"
+
+search:
+  country: "br"            # Brasil
+  location: "São Paulo"    # cidade usada nas buscas (deixe "" para o Brasil inteiro)
+  jsearch_max_keywords: 3  # JSearch gratuito tem ~200 buscas/mês: 3 por dia cabe no limite
+  adzuna_max_keywords: 8   # Adzuna gratuito permite bem mais
+
+  # Termos de busca, em ordem de prioridade (os primeiros são usados em todas as fontes)
+  keywords:
+    - "analista financeiro sênior"
+    - "analista de tesouraria"
+    - "analista de contas a pagar sênior"
+    - "especialista financeiro"
+    - "supervisor financeiro"
+    - "supervisor de contas a pagar"
+    - "coordenador de tesouraria"
+    - "senior financial analyst"
+    - "treasury analyst"
+    - "accounts payable"
+
+  # Mantido por compatibilidade (a modalidade agora é detectada automaticamente:
+  # Remoto, Híbrido, Presencial ou Não informado)
+  modalities:
+    - remoto
+    - híbrido
+    - presencial
+
+experience:
+  # Máximo de anos de experiência exigidos (vagas com mais são descartadas)
+  max_years: 12
+
+  # Vagas com estas palavras NO TÍTULO são descartadas
+  exclude_levels:
+    - júnior
+    - junior
+    - "jr"
+    - estágio
+    - estagiário
+    - estagiária
+    - trainee
+    - aprendiz
+    - assistente
+    - auxiliar
+    - gerente
+    - diretor
+    - diretora
+    - "cfo"
+    - "head"
+    - manager
+    - director
+    - intern
+
+  # Apenas referência (não é usado como filtro)
+  include_levels:
+    - pleno
+    - sênior
+    - senior
+    - especialista
+    - supervisor
+    - coordenador
